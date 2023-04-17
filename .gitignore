@@ -1,0 +1,17 @@
+src/staticfiles/*
+src/media/*
+src/static/*
+src/back_media/*
+src/back_static/*
+src/.idea/*
+src/.env
+**/migrations/00*.py
+src/db.sqlite3
+.venv/*
+db.sqlite3
+.idea/
+back_media/
+media/
+venv/
+*.pyc
+storage/
