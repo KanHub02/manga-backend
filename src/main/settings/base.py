@@ -16,7 +16,7 @@ PRODUCTION = env("PRODUCTION", default=False, cast=bool)
 LOCAL_APPS = [
     "common.apps.CommonConfig",
     "users.apps.UsersConfig",
-    "manga.apps.MangaConfig"
+    "manga.apps.MangaConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -80,7 +80,7 @@ LANGUAGE_CODE = "ru-RU"
 
 TIME_ZONE = "Asia/Bishkek"
 
-DATE_FORMAT = '%Y-%m-%d'
+DATE_FORMAT = "%Y-%m-%d"
 USE_I18N = True
 
 USE_L10N = True
@@ -135,7 +135,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
-#AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "users.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     # {
