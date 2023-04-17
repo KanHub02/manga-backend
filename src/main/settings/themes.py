@@ -1,10 +1,9 @@
 AZZMIN_SETTINGS = {
-    "site_title": "Geeks Online",
-    "site_header": "Geeks Online",
-    "site_brand": "GO Admin",
+    "site_title": "Manga Read",
+    "site_header": "Manga Read",
+    "site_brand": "Manga Read Admin",
     "site_logo_classes": "img-circle",
-    "site_icon": "/assets/icons/admin_logo.svg",
-    "welcome_sign": "Добро пожаловать в панель администратора сайта Geeks Online!",
+    "welcome_sign": "Добро пожаловать в панель администратора сайта Manga Read!",
     "copyright": "GeekStudio",
     "search_model": "auth.User",
     "user_avatar": "None",
@@ -13,28 +12,10 @@ AZZMIN_SETTINGS = {
     ],
     "usermenu_links": [
         {
-            "model": "user.User",
+            "model": "users.User",
         },
     ],
-    "show_sidebar": True,
-    "navigation_expanded": True,
-    "hide_apps": [],
-    "hide_models": [],
-    "icons": {
-        "user.User": "fas fa-user",
-    },
-    "order_with_respect_to": [
-        # apps
-        # models
-    ],
-    "default_icon_parents": "fas fa-chevron-circle-right",
-    "default_icon_children": "fas fa-thumbtack",
-    "related_modal_active": True,
-    "custom_css": "/common/style.css",
-    "custom_js": None,
-    "show_ui_builder": False,
-    "changeform_format": "horizontal_tabs",
-    # "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+  
 }
 
 JAZZMIN_UI_TWEAKS = {
