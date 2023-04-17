@@ -3,11 +3,11 @@ AZZMIN_SETTINGS = {
     "site_header": "Geeks Online",
     "site_brand": "GO Admin",
     "site_logo_classes": "img-circle",
-    "site_icon": '/assets/icons/admin_logo.svg',
+    "site_icon": "/assets/icons/admin_logo.svg",
     "welcome_sign": "Добро пожаловать в панель администратора сайта Geeks Online!",
     "copyright": "GeekStudio",
     "search_model": "auth.User",
-    "user_avatar": 'None',
+    "user_avatar": "None",
     "topmenu_links": [
         {"name": "Главная", "url": "admin:index", "permissions": ["auth.view_user"]},
     ],
@@ -23,13 +23,10 @@ AZZMIN_SETTINGS = {
     "icons": {
         "user.User": "fas fa-user",
     },
-
     "order_with_respect_to": [
-            # apps
-            # models
-        ],
-
-
+        # apps
+        # models
+    ],
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-thumbtack",
     "related_modal_active": True,
@@ -68,7 +65,7 @@ JAZZMIN_UI_TWEAKS = {
         "info": "btn-outline-info",
         "warning": "btn-outline-warning",
         "danger": "btn-outline-danger",
-        "success": "btn-outline-success"
+        "success": "btn-outline-success",
     },
-    "actions_sticky_top": True
+    "actions_sticky_top": True,
 }
