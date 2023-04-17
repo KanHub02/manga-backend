@@ -8,7 +8,9 @@ from common.models import BaseModel
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     email = models.EmailField(null=True, unique=True, blank=True, verbose_name="Почта")
     username = models.CharField(max_length=50, unique=True)
-    phone = models.CharField(max_length=14, null=True, blank=True, verbose_name="Номер телефона")
+    phone = models.CharField(
+        max_length=14, null=True, blank=True, verbose_name="Номер телефона"
+    )
     image = models.URLField(
         null=True, blank=True, verbose_name="Ссылка на картинку из другого источника"
     )
