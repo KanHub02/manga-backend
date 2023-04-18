@@ -1,4 +1,3 @@
-from sentry_sdk.integrations.django import DjangoIntegration
 from .env_reader import env, csv
 
 # SECRET_KEY

@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from ..services import UserService
-from ..models import User, Comment
-from .extra_api import FavoriteMangaAPI
+from .services import UserService
+from .models import User, Comment
 from manga.models import Manga
 
 
@@ -29,7 +28,6 @@ class SignInSerializer(serializers.Serializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    favorite_manga = FavoriteMangaAPI(many=True)
 
     class Meta:
         model = User
