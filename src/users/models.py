@@ -5,7 +5,7 @@ from .managers import UserManager
 from common.models import BaseModel
 
 
-class User(AbstractBaseUser, PermissionsMixin, BaseModel):
+class User(AbstractBaseUser, PermissionsMixin, models.Model):
     email = models.EmailField(null=True, unique=True, blank=True, verbose_name="Почта")
     username = models.CharField(max_length=50, unique=True)
     phone = models.CharField(
@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         verbose_name_plural = "Пользователи"
 
 
-class Comment(BaseModel):
+class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Комментатор")
     manga = models.ForeignKey(
         "manga.Manga",

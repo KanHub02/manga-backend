@@ -2,7 +2,7 @@ from django.db import models
 from common.models import BaseModel
 
 
-class Genre(BaseModel):
+class Genre(models.Model):
     title = models.CharField(max_length=250, verbose_name="Имя жанра")
 
     class Meta:
@@ -13,7 +13,7 @@ class Genre(BaseModel):
         return self.title
 
 
-class Manga(BaseModel):
+class Manga(models.Model):
     title_id = models.IntegerField(
         unique=True, verbose_name="Индентификатор", null=True, blank=True
     )
