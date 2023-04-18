@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, response, status
 from .models import Manga
 from .serializers import (
-    ManagaSerializer,
+    MangaSerializer,
     CommentSerializer,
     CommentAddSerializer,
     MangaDetailSerializer,
@@ -11,7 +11,7 @@ from .serializers import (
 
 class MangaListApiView(generics.ListAPIView):
     queryset = Manga.objects.filter(is_deleted=False)
-    serializer_class = ManagaSerializer
+    serializer_class = MangaSerializer
 
 
 class MangaDetailView(generics.RetrieveAPIView):
