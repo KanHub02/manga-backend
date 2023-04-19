@@ -5,7 +5,7 @@ from .managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin, models.Model):
-    username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=255, unique=True)
     nickname = models.CharField(max_length=255, null=True, blank=True)
     image = models.URLField(
         null=True, blank=True, verbose_name="Ссылка на картинку из другого источника"
