@@ -32,7 +32,6 @@ class UserService:
         access = AccessToken.for_user(user)
         refresh = AccessToken.for_user(user)
         data = {
-            "message": "Login successfully",
             "user": user.username,
             "access_token": str(access),
             "refresh_token": str(refresh),

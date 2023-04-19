@@ -24,6 +24,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "debug_toolbar",
     "rest_framework_simplejwt",
+    "django_filters",
 ]
 
 THEME_APPS = [

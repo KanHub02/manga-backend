@@ -1,59 +1,113 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, response, status
+from rest_framework.permissions import IsAuthenticated
+
+import django_filters
+from rest_framework.filters import SearchFilter, OrderingFilter
+
 from .models import Manga
+from .services import MangaService
 from .serializers import (
     MangaSerializer,
     CommentSerializer,
     CommentAddSerializer,
     MangaDetailSerializer,
 )
+from .filters import MangaFilterSet
 
 
-class MangaListApiView(generics.ListAPIView):
-    queryset = Manga.objects.filter(is_deleted=False)
+class MangaListView(generics.ListAPIView):
+    queryset = MangaService._model.objects.all()
     serializer_class = MangaSerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
+    filter_backends = [
+        django_filters.rest_framework.DjangoFilterBackend,
+    ]
+    filterset_class = MangaFilterSet
 
 
-class MangaDetailView(generics.RetrieveAPIView):
-    queryset = Manga.objects.filter(is_deleted=False)
+class MangaRetriveView(generics.RetrieveAPIView):
+    queryset = MangaService._model.objects.all()
     serializer_class = MangaDetailSerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
     lookup_field = "slug"
 
     def get(self, request, slug):
-        manga = get_object_or_404(Manga, slug=slug)
-        serializer = self.serializer_class(manga, many=False)
-        manga.views += 1
-        manga.save()
-        return response.Response(data=serializer.data, status=status.HTTP_200_OK)
+        instance = MangaService.retrive(slug=slug)
+        if instance:
+            serializer = self.serializer_class(instance, many=False)
+            return response.Response(
+                data={"message": "Ok", "status": 200, "content": serializer.data}
+            )
+
+        return response.Response(
+            {
+                "message": "Not found",
+                "status": 404,
+                "content": {},
+                "detail": "Object not found",
+            }
+        )
 
 
-class MangaCommentsView(generics.GenericAPIView):
+class MangaCommentsView(generics.RetrieveAPIView):
+    queryset = MangaService._model.objects.all()
+    permission_classes = [
+        IsAuthenticated,
+    ]
     serializer_class = CommentSerializer
+    lookup_field = "slug"
 
     def get(self, request, slug):
-        manga = get_object_or_404(Manga, slug=slug)
-        comments_data = self.serializer_class(
-            manga.manga_comments, many=True, context={"request": request}
-        ).data
+        instance = self.get_queryset().filter(slug=slug).first()
+        if instance:
+            serializer = self.serializer_class(
+                instance.manga_comments, many=True, context={"request": request}
+            )
+            return response.Response(
+                {"message": "Ok", "status": 200, "content": serializer.data}
+            )
 
-        return response.Response(data=comments_data)
+        return response.Response(
+            {
+                "message": "Not found",
+                "status": 404,
+                "content": {},
+                "detail": "Object not found",
+            }
+        )
 
     def post(self, request, slug):
-        if request.user.is_authenticated:
-            manga = get_object_or_404(Manga, slug=slug)
+        instance = self.get_queryset().filter(slug=slug).first()
+        if instance:
             serializer = CommentAddSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save(
-                    manga=manga, user=request.user, text=request.data["text"]
+                    manga=instance,
+                    user=request.user,
+                    text=serializer.validated_data.get("text"),
                 )
                 return response.Response(
-                    data={
-                        "message": "Comment sent successfully",
-                        "text": self.request.data["text"],
-                    },
-                    status=status.HTTP_201_CREATED,
+                    data={"message": "Ok", "status": 201, "content": serializer.data}
                 )
+
+            return response.Response(
+                data={
+                    "message": "Bad request",
+                    "status": 200,
+                    "detail": serializer.errors,
+                }
+            )
+
         return response.Response(
-            data={"message": "Not authorized error"},
-            status=status.HTTP_401_UNAUTHORIZED,
+            {
+                "message": "Not found",
+                "status": 404,
+                "content": {},
+                "detail": "Object not found",
+            }
         )
