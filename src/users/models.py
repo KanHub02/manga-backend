@@ -44,7 +44,7 @@ class Comment(models.Model):
         verbose_name="Манга",
     )
     text = models.CharField(
-        max_length=255, null=False, blank=False, verbose_name="Текст"
+        max_length=500, null=False, blank=False, verbose_name="Текст"
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
