@@ -19,9 +19,9 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         response = requests.get(url=url, headers=HEADERS)
         data = response.json()
-        print("Comment -- created")
         for h in Manga.objects.all():
             for i in data["content"]:
+                print("Comment -- created")
                 Comment.objects.create(
                     user=random.choice(User.objects.all()),
                     text=i["text"],

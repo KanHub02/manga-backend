@@ -1,11 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-from rest_framework import generics, response, status
+from rest_framework import generics, response
 from rest_framework.permissions import IsAuthenticated
 
 import django_filters
-from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Manga
 from .services import MangaService
 from .serializers import (
     MangaSerializer,
@@ -14,27 +11,24 @@ from .serializers import (
     MangaDetailSerializer,
 )
 from .filters import MangaFilterSet
+from common.schemas import manga_schema
 
 
 class MangaListView(generics.ListAPIView):
     queryset = MangaService._model.objects.all()
     serializer_class = MangaSerializer
-    permission_classes = [
-        IsAuthenticated,
-    ]
     filter_backends = [
         django_filters.rest_framework.DjangoFilterBackend,
     ]
     filterset_class = MangaFilterSet
+    schema = manga_schema.MangaListShema()
 
 
 class MangaRetriveView(generics.RetrieveAPIView):
     queryset = MangaService._model.objects.all()
     serializer_class = MangaDetailSerializer
-    permission_classes = [
-        IsAuthenticated,
-    ]
     lookup_field = "slug"
+    schema = manga_schema.MangaDetailShema()
 
     def get(self, request, slug):
         instance = MangaService.retrive(slug=slug)
@@ -61,6 +55,7 @@ class MangaCommentsView(generics.RetrieveAPIView):
     ]
     serializer_class = CommentSerializer
     lookup_field = "slug"
+    schema = manga_schema.MangaCommentSchema()
 
     def get(self, request, slug):
         instance = self.get_queryset().filter(slug=slug).first()
