@@ -22,7 +22,6 @@ class Scrap:
             url = f"https://api.remanga.org/api/activity/comments/?title_id=80{str(page)}{str(page)}&page={str(page)}&ordering=&count=20"
 
             response = requests.get(url=url, headers=cls.HEADERS)
-            print(response.status_code)
             data = response.json()
             for i in data["content"]:
                 User.objects.get_or_create(
