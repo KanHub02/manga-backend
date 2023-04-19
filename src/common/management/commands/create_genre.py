@@ -8,4 +8,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         for i in GENRELIST:
+            print("Genre -- created")
             Genre.objects.get_or_create(title=i)

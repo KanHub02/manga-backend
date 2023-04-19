@@ -3,6 +3,8 @@ from manga.models import Manga
 from rest_framework.views import APIView
 from django.db.models import Q
 
+from common.schemas import base_schema
+
 
 class GlobalSearchSerializer(serializers.Serializer):
     promt = serializers.CharField(max_length=255)
@@ -10,6 +12,7 @@ class GlobalSearchSerializer(serializers.Serializer):
 
 class GlobalSearchView(APIView):
     serializer_class = GlobalSearchSerializer
+    schema = base_schema.GlobalSearchSchema()
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

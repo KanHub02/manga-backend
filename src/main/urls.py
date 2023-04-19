@@ -23,6 +23,7 @@ from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/v1/docs/", include_docs_urls(title="Manga Read Documentation")),
     path("api/v1/", include("manga.urls")),
     path("api/v1/account/", include("users.urls")),
 ]
