@@ -38,7 +38,7 @@ class GenreSerializer(serializers.ModelSerializer):
 class MangaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Manga
-        fields = "__all__"
+        exclude = ("title_id",)
 
 
 class MangaDetailSerializer(serializers.ModelSerializer):
