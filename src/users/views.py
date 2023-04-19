@@ -24,80 +24,35 @@ class SignUpView(generics.CreateAPIView):
         if serializer.is_valid():
             UserService.create_user(serializer.validated_data)
             return response.Response(
-                data={"message": "Register successfully"},
+                data={"message": "Created", "status": 201, "content": serializer.data},
                 status=status.HTTP_201_CREATED,
             )
-        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return response.Response(
+            {"message": "Bad request", "code": 400, "detail": serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 class SignInView(generics.GenericAPIView):
-    queryset = UserService.model.objects.filter(is_deleted=False).filter(
-        is_active=False
-    )
+    queryset = UserService.model.objects.all()
     serializer_class = SignInSerializer
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             user = authenticate(
-                username=serializer.data["login"], password=serializer.data["password"]
+                username=serializer.data["username"],
+                password=serializer.data["password"],
             )
             return response.Response(
-                data=UserService.generate_token(user=user), status=status.HTTP_200_OK
+                data={
+                    "message": "Ok",
+                    "status": 200,
+                    "content": UserService.generate_token(user=user),
+                },
+                status=status.HTTP_200_OK,
             )
 
-        return response.Response(data=serializer.errors)
-
-
-class FavoriteMangaApiView(generics.CreateAPIView):
-    queryset = User.objects.filter(is_deleted=False)
-    serializer_class = AddToFavoriteSerializer
-
-    def get(self, request, username):
-        try:
-            user = get_object_or_404(User, username=username)
-            serializer = ProfileSerializer(user, many=False)
-            return response.Response(data=serializer.data, status=status.HTTP_200_OK)
-        except:
-            raise UserNotFoundException()
-
-    def post(self, request, slug):
-        try:
-            user = self.request.user
-            manga = get_object_or_404(Manga, slug=slug)
-            serializer = self.serializer_class(data=request.data)
-            if serializer.is_valid(raise_exception=True):
-                UserService.add_to_favorite(user, manga)
-
-                return response.Response("OK")
-
-            return response.Response(serializer.errors)
-        except:
-            MangaNotFoundException()
-
-    def delete(self, request, slug):
-        try:
-            user = self.request.user
-            manga = get_object_or_404(Manga, slug=slug)
-            serializer = self.serializer_class(data=request.data)
-            if serializer.is_valid(raise_exception=True):
-                UserService.remove_from_favorite(user, manga)
-
-                return response.Response("OK")
-
-            return response.Response(serializer.errors)
-        except:
-            MangaNotFoundException()
-
-
-class GetUserFavoritesMangaView(generics.GenericAPIView):
-    queryset = User.objects.filter(is_deleted=False)
-    serializer_class = ProfileSerializer
-
-    def get(self, request, username):
-        try:
-            user = User.objects.get(username=username)
-            serializer = self.serializer_class(user, many=False)
-            return response.Response(data=serializer.data, status=status.HTTP_200_OK)
-        except:
-            raise UserNotFoundException()
+        return response.Response(
+            {"message": "Bad request", "status": 400, "detail": serializer.errors}
+        )

@@ -13,7 +13,7 @@ class GenreSerializer(serializers.ModelSerializer):
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "nickname", "image", "image_file"]
+        fields = ["id", "username", "image", "image_file"]
 
 
 class CommentSerializer(serializers.ModelSerializer):

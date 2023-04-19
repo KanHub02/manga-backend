@@ -15,7 +15,6 @@ AZZMIN_SETTINGS = {
             "model": "users.User",
         },
     ],
-  
 }
 
 JAZZMIN_UI_TWEAKS = {

@@ -1,9 +1,11 @@
 from django.db import models
-from common.models import BaseModel
 
 
-class Genre(BaseModel):
+class Genre(models.Model):
     title = models.CharField(max_length=250, verbose_name="Имя жанра")
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     class Meta:
         verbose_name = "Жанр"
@@ -13,7 +15,7 @@ class Genre(BaseModel):
         return self.title
 
 
-class Manga(BaseModel):
+class Manga(models.Model):
     title_id = models.IntegerField(
         unique=True, verbose_name="Индентификатор", null=True, blank=True
     )
@@ -39,6 +41,9 @@ class Manga(BaseModel):
         verbose_name="Кол-во просмотров", null=True, blank=True
     )
     rating = models.FloatField(default=0.0, blank=True, verbose_name="Рейтинг")
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     class Meta:
         verbose_name = "Манга"

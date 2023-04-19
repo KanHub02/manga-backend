@@ -106,4 +106,3 @@ class Scrap:
 def create_genre(self, *args, **kwargs):
     for i in GENRELIST:
         Genre.objects.get_or_create(title=i)
-

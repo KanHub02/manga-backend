@@ -2,15 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 from .managers import UserManager
-from common.models import BaseModel
 
 
-class User(AbstractBaseUser, PermissionsMixin, BaseModel):
-    email = models.EmailField(null=True, unique=True, blank=True, verbose_name="Почта")
+class User(AbstractBaseUser, PermissionsMixin, models.Model):
     username = models.CharField(max_length=50, unique=True)
-    phone = models.CharField(
-        max_length=14, null=True, blank=True, verbose_name="Номер телефона"
-    )
+    nickname = models.CharField(max_length=255, null=True, blank=True)
     image = models.URLField(
         null=True, blank=True, verbose_name="Ссылка на картинку из другого источника"
     )
@@ -21,13 +17,6 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         blank=True,
         verbose_name="Картинка",
     )
-    favorite_manga = models.ManyToManyField(
-        "manga.Manga",
-        null=True,
-        blank=True,
-        related_name="user_favorite_manga",
-        verbose_name="Избранное",
-    )
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -35,6 +24,9 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     objects = UserManager()
 
     USERNAME_FIELD = "username"
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     def __str__(self):
         return self.username
@@ -44,7 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         verbose_name_plural = "Пользователи"
 
 
-class Comment(BaseModel):
+class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Комментатор")
     manga = models.ForeignKey(
         "manga.Manga",
@@ -55,6 +47,8 @@ class Comment(BaseModel):
     text = models.CharField(
         max_length=255, null=False, blank=False, verbose_name="Текст"
     )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     def __str__(self):
         return f"{self.user} Прокомментровал {self.manga}"

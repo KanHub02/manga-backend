@@ -5,9 +5,7 @@ from .models import User, Comment
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     fields = (
-        "email",
         "username",
-        "phone",
         "image",
         "image_file",
         "favorite_manga",
@@ -17,8 +15,8 @@ class UserAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = ("id", "created_at", "updated_at")
-    list_display = ["username", "phone"]
-    list_display_links =["username", "phone"]
+    list_display = ["username", "image_file"]
+    list_display_links = ["username", "image_file"]
 
 
 @admin.register(Comment)

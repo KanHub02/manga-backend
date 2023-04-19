@@ -14,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     command: bash entrypoints.sh
     env_file:
       - ./src/.env
