@@ -29,11 +29,18 @@ class UserService:
 
     @classmethod
     def generate_token(cls, user: model) -> dict:
-        access = AccessToken.for_user(user)
-        refresh = AccessToken.for_user(user)
-        data = {
-            "user": user.username,
-            "access_token": str(access),
-            "refresh_token": str(refresh),
+        if cls.model.objects.filter(username=user.username):
+            access = AccessToken.for_user(user)
+            refresh = AccessToken.for_user(user)
+            data = {
+                "user": user.username,
+                "access_token": str(access),
+                "refresh_token": str(refresh),
+            }
+            return data
+
+        return {
+            "message": "Bad request",
+            "status": 400,
+            "detail": "wrong password or username",
         }
-        return data

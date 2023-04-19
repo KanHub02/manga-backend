@@ -28,16 +28,16 @@ class MangaListShema(AutoSchema):
                     location="query",
                     schema=coreschema.String(
                         description="Filter by issue year value 'from'"
-                    )
+                    ),
                 ),
-                                coreapi.Field(
+                coreapi.Field(
                     name="max_issue_year",
                     required=False,
                     location="query",
                     schema=coreschema.String(
                         description="Filter by issue year value 'before'"
-                    )
-                )
+                    ),
+                ),
             ]
             return self._manual_fields + api_fields
 
@@ -51,9 +51,7 @@ class MangaDetailShema(AutoSchema):
                     name="slug",
                     required=False,
                     location="path",
-                    schema=coreschema.String(
-                        description="slug - 'slug field'"
-                    ),
+                    schema=coreschema.String(description="slug - 'slug field'"),
                 ),
             ]
             return self._manual_fields + api_fields
@@ -68,9 +66,7 @@ class MangaCommentSchema(AutoSchema):
                     name="slug",
                     required=False,
                     location="path",
-                    schema=coreschema.String(
-                        description="slug - 'slug field'"
-                    ),
+                    schema=coreschema.String(description="slug - 'slug field'"),
                 ),
                 coreapi.Field(
                     name="text",
@@ -85,9 +81,7 @@ class MangaCommentSchema(AutoSchema):
                     name="slug",
                     required=False,
                     location="path",
-                    schema=coreschema.String(
-                        description="slug - 'slug field'"
-                    ),
+                    schema=coreschema.String(description="slug - 'slug field'"),
                 ),
             ]
             return self._manual_fields + api_fields

@@ -3,12 +3,13 @@ from rest_framework.permissions import IsAuthenticated
 
 import django_filters
 
-from .services import MangaService
+from .services import MangaService, GenreService
 from .serializers import (
     MangaSerializer,
     CommentSerializer,
     CommentAddSerializer,
     MangaDetailSerializer,
+    GenreSerializer,
 )
 from .filters import MangaFilterSet
 from common.schemas import manga_schema
@@ -106,3 +107,8 @@ class MangaCommentsView(generics.RetrieveAPIView):
                 "detail": "Object not found",
             }
         )
+
+
+class GenreListApiView(generics.ListAPIView):
+    queryset = GenreService._model.objects.all()
+    serializer_class = GenreSerializer
