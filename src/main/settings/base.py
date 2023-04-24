@@ -153,10 +153,10 @@ AUTH_PASSWORD_VALIDATORS = [
     # },
 ]
 
+from .cors import *
 
 from .themes import *
 
-from .cors import *
 
 if not PRODUCTION:
     from .local import *
