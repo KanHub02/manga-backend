@@ -9,3 +9,7 @@ class MangaService:
         instance = cls._model.objects.filter(slug=slug)
         if instance is not None:
             return instance.first()
+
+
+class GenreService:
+    _model = Genre

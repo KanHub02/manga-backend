@@ -153,14 +153,10 @@ AUTH_PASSWORD_VALIDATORS = [
     # },
 ]
 
-EXTRA_SMALL_THUMBNAIL_SIZE = 100, 100
-SMALL_THUMBNAIL_SIZE = 512, 512
-MEDIUM_THUMBNAIL_SIZE = 1024, 1024
-
+from .cors import *
 
 from .themes import *
 
-from .cors import *
 
 if not PRODUCTION:
     from .local import *
